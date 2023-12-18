@@ -1,0 +1,48 @@
+datasource db {
+    provider = "postgresql"
+    url      = "postgresql://goran:Qwertz123@localhost:5433/portfolio?schema=public"
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+model CryptoCurrency {
+    id         Int     @id @default(autoincrement())
+    name       String
+    ticker     String
+    smallImage String? @map("small_image")
+
+    @@map("cryptocurrency")
+}
+
+model PortfolioTransaction {
+    id            Int      @id @default(autoincrement())
+    ticker        String
+    price         Float
+    priceCurrency String?  @map("price_currency")
+    fee           Float?
+    feeCurrency   String?  @map("fee_currency")
+    amount        Float
+    note          String?
+    createdAt     DateTime @default(now()) @map("created_at")
+    updatedAt     DateTime @default(now()) @map("updated_at")
+
+    @@map("portfolio_transaction")
+}
+
+// model User {
+//     id    Int     @id @default(autoincrement())
+//     email String  @unique
+//     name  String?
+//     // posts Post[]
+// }
+
+// model Post {
+//     id        Int     @id @default(autoincrement())
+//     title     String
+//     content   String?
+//     published Boolean @default(false)
+//     // author    User    @relation(fields: [authorId], references: [id])
+//     authorId  Int
+// }
